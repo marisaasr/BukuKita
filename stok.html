@@ -1,0 +1,271 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Katalog & Stok Buku | BukuKita</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="dashboard-page">
+
+<div class="app-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-brand">
+            <div class="sidebar-logo">
+                <svg viewBox="0 0 24 24" fill="none">
+                    <path d="M4 5.5C7.2 5.1 10 5.9 12 7.5V20C10 18.4 7.2 17.6 4 18V5.5Z" fill="white"/>
+                    <path d="M20 5.5C16.8 5.1 14 5.9 12 7.5V20C14 18.4 16.8 17.6 20 18V5.5Z" fill="white" fill-opacity=".75"/>
+                    <path d="M12 7.5V20" stroke="#7049B8" stroke-width="1.2"/>
+                </svg>
+            </div>
+            <span>BukuKita</span>
+        </div>
+
+        <div class="sidebar-menu">
+            <p class="menu-label">MENU UTAMA</p>
+
+            <a href="dashboard.html" class="menu-item">
+                <span class="menu-icon">▦</span>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="stok.html" class="menu-item active">
+                <span class="menu-icon">▤</span>
+                <span>Katalog & Stok Buku</span>
+            </a>
+
+            <a href="checkout.html" class="menu-item">
+                <span class="menu-icon">🛒</span>
+                <span>Checkout</span>
+            </a>
+
+            <a href="tracking.html" class="menu-item">
+                <span class="menu-icon">⌖</span>
+                <span>Tracking Pesanan</span>
+            </a>
+        </div>
+
+        <div class="sidebar-bottom">
+            <div class="sidebar-help">
+                <div class="help-icon">?</div>
+                <div>
+                    <strong>Butuh Bantuan?</strong>
+                    <small>Hubungi administrator</small>
+                </div>
+            </div>
+
+            <button type="button" class="logout-button" id="logoutButton">
+                <span>↪</span> Keluar
+            </button>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <header class="dashboard-topbar">
+            <div class="topbar-left">
+                <button class="sidebar-toggle" id="sidebarToggle" type="button">☰</button>
+                <div>
+                    <h2>Katalog & Stok Buku</h2>
+                    <p>Kelola dan temukan koleksi buku BukuKita</p>
+                </div>
+            </div>
+
+            <div class="topbar-profile">
+                <div class="profile-avatar" id="profileAvatar">U</div>
+                <div class="profile-information">
+                    <strong id="profileName">Pengguna</strong>
+                    <small id="profileRole">User</small>
+                </div>
+            </div>
+        </header>
+
+        <section class="dashboard-content">
+
+            <!-- PAGE TITLE -->
+            <div class="catalog-welcome">
+                <div>
+                    <span class="catalog-eyebrow">KOLEKSI BUKUKITA</span>
+                    <h1>Temukan Buku Favoritmu</h1>
+                    <p>Jelajahi koleksi buku dan lihat ketersediaan stok.</p>
+                </div>
+                <div class="catalog-decoration">📚</div>
+            </div>
+
+            <!-- SUMMARY -->
+            <div class="catalog-summary">
+                <div class="catalog-summary-card">
+                    <div class="catalog-summary-icon purple">▤</div>
+                    <div>
+                        <small>Jenis Buku</small>
+                        <h3 id="catalogTotal">0</h3>
+                    </div>
+                </div>
+
+                <div class="catalog-summary-card">
+                    <div class="catalog-summary-icon blue">▣</div>
+                    <div>
+                        <small>Total Persediaan</small>
+                        <h3 id="catalogStock">0</h3>
+                    </div>
+                </div>
+
+                <div class="catalog-summary-card">
+                    <div class="catalog-summary-icon orange">◷</div>
+                    <div>
+                        <small>Stok Menipis</small>
+                        <h3 id="catalogLowStock">0</h3>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CATALOG PANEL -->
+            <div class="catalog-panel">
+
+                <div class="catalog-panel-heading">
+                    <div>
+                        <h2>Daftar Koleksi Buku</h2>
+                        <p>Daftar buku yang tersedia di BukuKita.</p>
+                    </div>
+
+                    <button type="button" class="add-book-button"
+                            id="addBookButton" style="display:none;">
+                        + Tambah Buku
+                    </button>
+                </div>
+
+                <!-- SEARCH AND FILTER -->
+                <div class="catalog-toolbar">
+                    <div class="catalog-search">
+                        <span>⌕</span>
+                        <input type="search" id="searchBook"
+                               placeholder="Cari kode atau judul buku...">
+                    </div>
+
+                    <select id="filterCategory" class="catalog-filter">
+                        <option value="">Semua Kategori</option>
+                    </select>
+                </div>
+
+                <!-- BOOK TABLE -->
+                <div class="table-responsive">
+                    <table class="catalog-table">
+                        <thead>
+                            <tr>
+                                <th>BUKU</th>
+                                <th>KODE</th>
+                                <th>KATEGORI</th>
+                                <th>EDISI</th>
+                                <th>STOK</th>
+                                <th>HARGA</th>
+                                <th id="actionHeader" style="display:none;">AKSI</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="bookTableBody">
+                            <tr>
+                                <td colspan="7">Memuat katalog buku...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="catalog-empty" id="catalogEmpty" style="display:none;">
+                    <div>📖</div>
+                    <h3>Buku tidak ditemukan</h3>
+                    <p>Coba gunakan kata kunci atau kategori lainnya.</p>
+                </div>
+
+                <div class="catalog-table-footer">
+                    <span id="catalogResultCount">Menampilkan 0 buku</span>
+                    <span>Data katalog BukuKita</span>
+                </div>
+
+            </div>
+
+            <footer class="dashboard-footer">
+                © 2026 BukuKita. All Rights Reserved.
+            </footer>
+
+        </section>
+    </main>
+</div>
+
+<!-- MODAL TAMBAH / EDIT BUKU -->
+<div class="modal-backdrop" id="bookModal">
+    <div class="modal catalog-modal">
+
+        <button type="button" class="modal-close" id="closeBookModal">
+            &times;
+        </button>
+
+        <h2 id="bookModalTitle">Tambah Buku Baru</h2>
+        <p class="modal-description">
+            Lengkapi informasi buku yang akan dimasukkan ke katalog.
+        </p>
+
+        <form id="bookForm">
+
+            <div class="form-group">
+                <label for="bookCode">Kode Buku</label>
+                <input type="text" id="bookCode"
+                       placeholder="Contoh: ASIP4301" required>
+            </div>
+
+            <div class="form-group">
+                <label for="bookName">Nama Buku</label>
+                <input type="text" id="bookName"
+                       placeholder="Masukkan nama buku" required>
+            </div>
+
+            <div class="catalog-form-row">
+                <div class="form-group">
+                    <label for="bookCategory">Kategori</label>
+                    <input type="text" id="bookCategory"
+                           placeholder="Contoh: Buku Ajar" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="bookEdition">Edisi</label>
+                    <input type="number" id="bookEdition"
+                           min="1" placeholder="1" required>
+                </div>
+            </div>
+
+            <div class="catalog-form-row">
+                <div class="form-group">
+                    <label for="bookStock">Jumlah Stok</label>
+                    <input type="number" id="bookStock"
+                           min="0" placeholder="0" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="bookPrice">Harga (Rp)</label>
+                    <input type="number" id="bookPrice"
+                           min="0" placeholder="150000" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="bookCover">Lokasi File Cover</label>
+                <input type="text" id="bookCover"
+                       placeholder="img/nama_buku.jpg">
+            </div>
+
+            <button type="submit" class="login-button" id="saveBookButton">
+                Simpan Buku
+            </button>
+
+        </form>
+    </div>
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/script.js"></script>
+
+</body>
+</html>

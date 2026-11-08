@@ -1,0 +1,347 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tracking Pesanan | BukuKita</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="dashboard-page">
+
+<div class="app-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-brand">
+            <div class="sidebar-logo">📚</div>
+            <span>BukuKita</span>
+        </div>
+
+        <div class="sidebar-menu">
+            <p class="menu-label">MENU UTAMA</p>
+
+            <a href="dashboard.html" class="menu-item">
+                <span class="menu-icon">▦</span>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="stok.html" class="menu-item">
+                <span class="menu-icon">▤</span>
+                <span>Katalog & Stok Buku</span>
+            </a>
+
+            <a href="checkout.html" class="menu-item">
+                <span class="menu-icon">🛒</span>
+                <span>Checkout</span>
+            </a>
+
+            <a href="tracking.html" class="menu-item active">
+                <span class="menu-icon">⌖</span>
+                <span>Tracking Pesanan</span>
+            </a>
+        </div>
+
+        <div class="sidebar-bottom">
+            <div class="sidebar-help">
+                <div class="help-icon">?</div>
+                <div>
+                    <strong>Butuh Bantuan?</strong>
+                    <small>Hubungi administrator</small>
+                </div>
+            </div>
+
+            <button type="button" class="logout-button" id="logoutButton">
+                ↪ Keluar
+            </button>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <header class="dashboard-topbar">
+            <div class="topbar-left">
+                <button class="sidebar-toggle" id="sidebarToggle"
+                        type="button">☰</button>
+                <div>
+                    <h2>Tracking Pesanan</h2>
+                    <p>Pantau perjalanan pesanan buku kamu</p>
+                </div>
+            </div>
+
+            <div class="topbar-profile">
+                <div class="profile-avatar" id="profileAvatar">U</div>
+                <div class="profile-information">
+                    <strong id="profileName">Pengguna</strong>
+                    <small id="profileRole">User</small>
+                </div>
+            </div>
+        </header>
+
+        <section class="dashboard-content">
+
+            <div class="checkout-welcome">
+                <div>
+                    <span>INFORMASI PENGIRIMAN</span>
+                    <h1>Lacak Pesananmu!</h1>
+                    <p>Masukkan nomor DO untuk melihat status pengiriman buku.</p>
+                </div>
+                <div class="checkout-decoration">📦</div>
+            </div>
+
+            <!-- SEARCH -->
+            <div class="catalog-panel">
+                <div class="catalog-panel-heading">
+                    <div>
+                        <h2>Cari Pesanan</h2>
+                        <p>Gunakan nomor Delivery Order (DO).</p>
+                    </div>
+                </div>
+
+                <form id="trackingForm">
+                    <div class="catalog-search">
+                        <span>⌕</span>
+                        <input type="text" id="trackingNumber"
+                               placeholder="Contoh: 20230012"
+                               required>
+                    </div>
+
+                    <button type="submit" class="login-button"
+                            style="margin-top:15px;">
+                        Cari Pesanan →
+                    </button>
+                </form>
+            </div>
+
+            <!-- RESULT -->
+            <div class="catalog-panel" id="trackingResult"
+                 style="display:none; margin-top:25px;">
+
+                <h2>Detail Pesanan</h2>
+
+                <div style="margin-top:20px; line-height:2;">
+                    <p><strong>Nomor DO:</strong>
+                        <span id="resultDO">-</span></p>
+
+                    <p><strong>Nama Penerima:</strong>
+                        <span id="resultName">-</span></p>
+
+                    <p><strong>Ekspedisi:</strong>
+                        <span id="resultCourier">-</span></p>
+
+                    <p><strong>Tanggal Pesanan:</strong>
+                        <span id="resultDate">-</span></p>
+
+                    <p><strong>Status:</strong>
+                        <span id="resultStatus">-</span></p>
+
+                    <p><strong>Total Pembayaran:</strong>
+                        <span id="resultTotal">-</span></p>
+                </div>
+
+                <hr style="margin:20px 0;">
+
+                <h3>Daftar Buku</h3>
+                <div id="resultItems" style="margin-top:12px;"></div>
+
+                <hr style="margin:20px 0;">
+
+                <h3>Riwayat Perjalanan</h3>
+                <div id="trackingHistory" style="margin-top:20px;">
+                </div>
+            </div>
+
+            <p id="trackingMessage"
+               style="margin-top:20px; color:#dc2626;">
+            </p>
+
+            <footer class="dashboard-footer">
+                © 2026 BukuKita. All Rights Reserved.
+            </footer>
+
+        </section>
+    </main>
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/script.js"></script>
+
+<script>
+(function () {
+
+    // CEK LOGIN
+    const sesi = sessionStorage.getItem("userLogin");
+
+    if (!sesi) {
+        window.location.replace("index.html");
+        return;
+    }
+
+    const pengguna = JSON.parse(sesi);
+
+    document.getElementById("profileName").textContent =
+        pengguna.nama || "Pengguna";
+
+    document.getElementById("profileRole").textContent =
+        pengguna.role || "User";
+
+    document.getElementById("profileAvatar").textContent =
+        (pengguna.nama || "U").charAt(0).toUpperCase();
+
+    // AMBIL PESANAN DARI LOCAL STORAGE DAN DATA LAMA
+let pesananBaru = [];
+
+try {
+    pesananBaru = JSON.parse(
+        localStorage.getItem("bukuKitaPesanan") || "[]"
+    );
+
+    if (!Array.isArray(pesananBaru)) {
+        pesananBaru = [];
+    }
+} catch (error) {
+    pesananBaru = [];
+}
+
+const pesananLama = Array.isArray(dataTracking)
+    ? dataTracking
+    : Object.values(dataTracking || {});
+
+const semuaPesanan = [...pesananLama, ...pesananBaru];
+
+const daftarPesanan = semuaPesanan.filter(function (pesanan, index, array) {
+    return array.findIndex(function (item) {
+        return String(item.nomorDO) === String(pesanan.nomorDO);
+    }) === index;
+});
+
+    // FORMAT RUPIAH
+    function rupiah(angka) {
+        return "Rp " + Number(angka || 0).toLocaleString("id-ID");
+    }
+
+    // MENCEGAH HTML DARI DATA PENGGUNA
+    function aman(teks) {
+        return String(teks ?? "").replace(/[&<>"']/g, function (huruf) {
+            return {
+                "&": "&amp;",
+                "<": "&lt;",
+                ">": "&gt;",
+                '"': "&quot;",
+                "'": "&#039;"
+            }[huruf];
+        });
+    }
+
+    // PENCARIAN PESANAN
+    document.getElementById("trackingForm")
+        .addEventListener("submit", function (event) {
+
+            event.preventDefault();
+
+            const nomor = document.getElementById("trackingNumber")
+                .value.trim();
+
+            const pesan = document.getElementById("trackingMessage");
+            const hasil = document.getElementById("trackingResult");
+
+            const pesanan = daftarPesanan.find(function (item) {
+                return String(item.nomorDO).toLowerCase() ===
+                       nomor.toLowerCase();
+            });
+
+            if (!pesanan) {
+                hasil.style.display = "none";
+                pesan.textContent =
+                    "Pesanan tidak ditemukan. Periksa kembali nomor DO.";
+                return;
+            }
+
+            // TAMPILKAN DETAIL
+            pesan.textContent = "";
+            hasil.style.display = "block";
+
+            document.getElementById("resultDO").textContent =
+                pesanan.nomorDO || "-";
+
+            document.getElementById("resultName").textContent =
+                pesanan.nama || "-";
+
+            document.getElementById("resultCourier").textContent =
+                pesanan.ekspedisi || "-";
+
+            document.getElementById("resultDate").textContent =
+                pesanan.tanggal || "-";
+
+            document.getElementById("resultStatus").textContent =
+                pesanan.status || "Diproses";
+
+            document.getElementById("resultTotal").textContent =
+                rupiah(pesanan.total);
+
+            // DAFTAR BUKU
+            const items = Array.isArray(pesanan.items)
+                ? pesanan.items
+                : [];
+
+            document.getElementById("resultItems").innerHTML =
+                items.length
+                ? items.map(function (item) {
+                    return `
+                        <div style="padding:12px 0; border-bottom:1px solid #eee;">
+                            <strong>${aman(item.namaBarang)}</strong>
+                            <p>Jumlah: ${aman(item.jumlah)} buku</p>
+                            <p>Subtotal: ${rupiah(item.subtotal)}</p>
+                        </div>
+                    `;
+                }).join("")
+                : "<p>Informasi buku tidak tersedia.</p>";
+
+            // RIWAYAT PERJALANAN
+            const perjalanan = Array.isArray(pesanan.perjalanan)
+                ? pesanan.perjalanan
+                : [];
+
+            document.getElementById("trackingHistory").innerHTML =
+                perjalanan.length
+                ? perjalanan.map(function (riwayat) {
+                    return `
+                        <div style="padding:12px 15px; border-left:3px solid #7049B8; margin-bottom:15px;">
+                            <strong>${aman(riwayat.waktu)}</strong>
+                            <p>${aman(riwayat.keterangan)}</p>
+                        </div>
+                    `;
+                }).join("")
+                : "<p>Belum ada riwayat pengiriman.</p>";
+
+        });
+
+    // LOGOUT
+    const logout = document.getElementById("logoutButton");
+
+    if (logout) {
+        logout.addEventListener("click", function () {
+            if (confirm("Apakah Anda yakin ingin keluar?")) {
+                sessionStorage.removeItem("userLogin");
+                window.location.href = "index.html";
+            }
+        });
+    }
+
+    // SIDEBAR
+    const toggle = document.getElementById("sidebarToggle");
+    const sidebar = document.getElementById("sidebar");
+
+    if (toggle && sidebar) {
+        toggle.addEventListener("click", function () {
+            sidebar.classList.toggle("open");
+        });
+    }
+
+})();
+</script>
+
+</body>
+</html>
+

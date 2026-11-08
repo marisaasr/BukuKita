@@ -1,0 +1,240 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout | BukuKita</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="dashboard-page">
+
+<div class="app-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-brand">
+            <div class="sidebar-logo">
+                <svg viewBox="0 0 24 24" fill="none">
+                    <path d="M4 5.5C7.2 5.1 10 5.9 12 7.5V20C10 18.4 7.2 17.6 4 18V5.5Z" fill="white"/>
+                    <path d="M20 5.5C16.8 5.1 14 5.9 12 7.5V20C14 18.4 16.8 17.6 20 18V5.5Z" fill="white" fill-opacity=".75"/>
+                    <path d="M12 7.5V20" stroke="#7049B8" stroke-width="1.2"/>
+                </svg>
+            </div>
+            <span>BukuKita</span>
+        </div>
+
+        <div class="sidebar-menu">
+            <p class="menu-label">MENU UTAMA</p>
+
+            <a href="dashboard.html" class="menu-item">
+                <span class="menu-icon">▦</span>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="stok.html" class="menu-item">
+                <span class="menu-icon">▤</span>
+                <span>Katalog & Stok Buku</span>
+            </a>
+
+            <a href="checkout.html" class="menu-item active">
+                <span class="menu-icon">🛒</span>
+                <span>Checkout</span>
+            </a>
+
+            <a href="tracking.html" class="menu-item">
+                <span class="menu-icon">⌖</span>
+                <span>Tracking Pesanan</span>
+            </a>
+        </div>
+
+        <div class="sidebar-bottom">
+            <div class="sidebar-help">
+                <div class="help-icon">?</div>
+                <div>
+                    <strong>Butuh Bantuan?</strong>
+                    <small>Hubungi administrator</small>
+                </div>
+            </div>
+
+            <button type="button" class="logout-button" id="logoutButton">
+                <span>↪</span> Keluar
+            </button>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <header class="dashboard-topbar">
+            <div class="topbar-left">
+                <button class="sidebar-toggle" id="sidebarToggle" type="button">☰</button>
+                <div>
+                    <h2>Checkout</h2>
+                    <p>Pesan buku favoritmu dengan mudah</p>
+                </div>
+            </div>
+
+            <div class="topbar-profile">
+                <div class="profile-avatar" id="profileAvatar">U</div>
+                <div class="profile-information">
+                    <strong id="profileName">Pengguna</strong>
+                    <small id="profileRole">User</small>
+                </div>
+            </div>
+        </header>
+
+        <section class="dashboard-content">
+
+            <!-- WELCOME -->
+            <div class="checkout-welcome">
+                <div>
+                    <span>PEMESANAN BUKU</span>
+                    <h1>Waktunya Memilih Buku!</h1>
+                    <p>Pilih koleksi buku yang ingin kamu pesan.</p>
+                </div>
+                <div class="checkout-decoration">🛍️</div>
+            </div>
+
+            <!-- BOOK SELECTION -->
+            <div class="checkout-section-heading">
+                <div>
+                    <h2>Pilih Buku</h2>
+                    <p>Tambahkan buku ke keranjang belanja kamu.</p>
+                </div>
+            </div>
+
+            <div class="checkout-search">
+                <span>⌕</span>
+                <input type="search" id="checkoutSearch"
+                       placeholder="Cari judul atau kode buku...">
+            </div>
+
+            <div class="checkout-book-grid" id="checkoutBookList">
+                <p>Memuat daftar buku...</p>
+            </div>
+
+            <!-- CART AND FORM -->
+            <div class="checkout-lower-grid">
+
+                <div class="checkout-panel">
+                    <div class="checkout-panel-heading">
+                        <div>
+                            <h2>Keranjang Belanja</h2>
+                            <p id="cartItemCount">0 item</p>
+                        </div>
+                        <span class="cart-heading-icon">🛒</span>
+                    </div>
+
+                    <div id="cartList" class="cart-list">
+                        <div class="cart-empty">
+                            <div>🛍️</div>
+                            <h3>Keranjang masih kosong</h3>
+                            <p>Silakan pilih buku yang ingin kamu pesan.</p>
+                        </div>
+                    </div>
+
+                    <div class="cart-total">
+                        <span>Total Pembayaran</span>
+                        <strong id="cartGrandTotal">Rp 0</strong>
+                    </div>
+                </div>
+
+                <!-- CUSTOMER FORM -->
+                <div class="checkout-panel">
+                    <div class="checkout-panel-heading">
+                        <div>
+                            <h2>Informasi Pengiriman</h2>
+                            <p>Lengkapi data penerima pesanan.</p>
+                        </div>
+                        <span class="cart-heading-icon">📦</span>
+                    </div>
+
+                    <form id="checkoutForm">
+
+                        <div class="form-group">
+                            <label for="receiverName">Nama Penerima</label>
+                            <input type="text" id="receiverName"
+                                   placeholder="Nama lengkap penerima" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="receiverPhone">Nomor Telepon</label>
+                            <input type="tel" id="receiverPhone"
+                                   placeholder="Contoh: 081234567890"
+                                   pattern="[0-9+\-\s]{9,16}" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="receiverAddress">Alamat Lengkap</label>
+                            <textarea id="receiverAddress" rows="3"
+                                      placeholder="Masukkan alamat lengkap, kecamatan, kota, dan kode pos"
+                                      required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="shippingService">Ekspedisi</label>
+                            <select id="shippingService" required>
+                                <option value="">Pilih ekspedisi</option>
+                                <option value="JNE">JNE</option>
+                                <option value="Pos Indonesia">Pos Indonesia</option>
+                                <option value="J&T">J&T Express</option>
+                                <option value="SiCepat">SiCepat</option>
+                            </select>
+                        </div>
+
+                        <div class="checkout-note">
+                            <span>ⓘ</span>
+                            <p>Pastikan alamat dan informasi penerima sudah benar sebelum membuat pesanan.</p>
+                        </div>
+
+                        <button type="submit" class="checkout-submit-button"
+                                id="submitOrder">
+                            Buat Pesanan →
+                        </button>
+
+                    </form>
+                </div>
+
+            </div>
+
+            <footer class="dashboard-footer">
+                © 2026 BukuKita. All Rights Reserved.
+            </footer>
+
+        </section>
+    </main>
+</div>
+
+<!-- SUCCESS MODAL -->
+<div class="modal-backdrop" id="orderSuccessModal">
+    <div class="modal order-success-modal">
+        <div class="success-icon">✓</div>
+        <h2>Pesanan Berhasil Dibuat!</h2>
+        <p>Terima kasih telah melakukan pemesanan di BukuKita.</p>
+
+        <div class="order-number-box">
+            <small>Nomor Delivery Order</small>
+            <strong id="successOrderNumber">-</strong>
+        </div>
+
+        <p class="success-instruction">
+            Simpan nomor pesanan ini untuk memantau pengiriman buku.
+        </p>
+
+        <a href="tracking.html" class="login-button success-track-link">
+            Lihat Tracking Pesanan →
+        </a>
+
+        <button type="button" class="success-close-button"
+                id="closeSuccessModal">
+            Kembali ke Checkout
+        </button>
+    </div>
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/script.js"></script>
+
+</body>
+</html>

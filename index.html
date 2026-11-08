@@ -1,0 +1,161 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | BukuKita</title>
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        .brand-icon {
+            width: 76px;
+            height: 76px;
+            background: linear-gradient(145deg, #9569E8, #6541B5);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            box-shadow: 0 8px 24px rgba(101, 65, 181, 0.25);
+        }
+
+        .brand-icon svg {
+            width: 43px;
+            height: 43px;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-container">
+        <div class="login-card">
+
+            <!-- LOGO BUKUKITA -->
+            <div class="brand-icon">
+                <svg viewBox="0 0 24 24" fill="none"
+                     xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4 5.5C7.2 5.1 10 5.9 12 7.5V20
+                             C10 18.4 7.2 17.6 4 18V5.5Z"
+                          fill="white"/>
+                    <path d="M20 5.5C16.8 5.1 14 5.9 12 7.5V20
+                             C14 18.4 16.8 17.6 20 18V5.5Z"
+                          fill="white" fill-opacity="0.75"/>
+                    <path d="M12 7.5V20"
+                          stroke="#7049B8" stroke-width="1.2"/>
+                </svg>
+            </div>
+
+            <h1 class="login-heading">BukuKita</h1>
+            <p class="login-subtitle">Temukan buku favoritmu di sini.</p>
+
+            <div class="login-form-section">
+                <h2>Selamat Datang!</h2>
+                <p>Silakan masuk ke akun Anda untuk melanjutkan.</p>
+
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email"
+                               placeholder="Masukkan email Anda" required>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="password-label">
+                            <label for="password">Password</label>
+                            <button type="button" class="forgot-link"
+                                    data-modal="forgotModal">
+                                Lupa Password?
+                            </button>
+                        </div>
+
+                        <div class="password-wrapper">
+                            <input type="password" id="password"
+                                   placeholder="Masukkan password" required>
+                            <button type="button" class="password-toggle"
+                                    id="togglePassword">Lihat</button>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="login-button">
+                        Masuk ke Akun <span>→</span>
+                    </button>
+                </form>
+
+                <div class="register-section">
+                    <span>Belum memiliki akun?</span>
+                    <button type="button" data-modal="registerModal">
+                        Daftar sekarang
+                    </button>
+                </div>
+            </div>
+
+            <footer class="login-footer">
+                © 2026 BukuKita. All Rights Reserved.
+            </footer>
+        </div>
+    </div>
+
+    <!-- MODAL LUPA PASSWORD -->
+    <div class="modal-backdrop" id="forgotModal">
+        <div class="modal">
+            <button type="button" class="modal-close">&times;</button>
+            <h2>Lupa Password?</h2>
+            <p class="modal-description">
+                Masukkan email yang terdaftar untuk memeriksa akun Anda.
+            </p>
+
+            <form id="forgotForm">
+                <div class="form-group">
+                    <label for="forgotEmail">Email</label>
+                    <input type="email" id="forgotEmail"
+                           placeholder="Masukkan email Anda" required>
+                </div>
+                <button type="submit" class="login-button">
+                    Periksa Email
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL DAFTAR -->
+    <div class="modal-backdrop" id="registerModal">
+        <div class="modal">
+            <button type="button" class="modal-close">&times;</button>
+            <h2>Buat Akun Baru</h2>
+            <p class="modal-description">
+                Daftar untuk mulai menjelajahi koleksi BukuKita.
+            </p>
+
+            <form id="registerForm">
+                <div class="form-group">
+                    <label for="registerName">Nama Lengkap</label>
+                    <input type="text" id="registerName"
+                           placeholder="Masukkan nama lengkap" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="registerEmail">Email</label>
+                    <input type="email" id="registerEmail"
+                           placeholder="Masukkan email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="registerPassword">Password</label>
+                    <input type="password" id="registerPassword"
+                           placeholder="Buat password" required>
+                </div>
+
+                <button type="submit" class="login-button">
+                    Daftar Sekarang
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/script.js"></script>
+
+</body>
+</html>

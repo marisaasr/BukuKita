@@ -1,0 +1,231 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | BukuKita</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="dashboard-page">
+
+    <div class="app-layout">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar" id="sidebar">
+
+            <div class="sidebar-brand">
+                <div class="sidebar-logo">
+                    <svg viewBox="0 0 24 24" fill="none">
+                        <path d="M4 5.5C7.2 5.1 10 5.9 12 7.5V20C10 18.4 7.2 17.6 4 18V5.5Z" fill="white"/>
+                        <path d="M20 5.5C16.8 5.1 14 5.9 12 7.5V20C14 18.4 16.8 17.6 20 18V5.5Z" fill="white" fill-opacity=".75"/>
+                        <path d="M12 7.5V20" stroke="#7049B8" stroke-width="1.2"/>
+                    </svg>
+                </div>
+                <span>BukuKita</span>
+            </div>
+
+            <div class="sidebar-menu">
+                <p class="menu-label">MENU UTAMA</p>
+
+                <a href="dashboard.html" class="menu-item active">
+                    <span class="menu-icon">▦</span>
+                    <span>Dashboard</span>
+                </a>
+
+                <a href="stok.html" class="menu-item">
+                    <span class="menu-icon">▤</span>
+                    <span>Katalog & Stok Buku</span>
+                </a>
+
+                <a href="checkout.html" class="menu-item">
+                    <span class="menu-icon">🛒</span>
+                    <span>Checkout</span>
+                </a>
+
+                <a href="tracking.html" class="menu-item">
+                    <span class="menu-icon">⌖</span>
+                    <span>Tracking Pesanan</span>
+                </a>
+            </div>
+
+            <div class="sidebar-bottom">
+                <a href="mailto:siti@gmail.com?subject=Bantuan%20Pengguna%20BukuKita"
+   class="sidebar-help"
+   style="text-decoration:none; color:inherit;">
+
+    <div class="help-icon">?</div>
+
+    <div>
+        <strong>Butuh Bantuan?</strong>
+        <small>Hubungi administrator</small>
+    </div>
+</a>
+
+                <button type="button" class="logout-button" id="logoutButton">
+                    <span>↪</span> Keluar
+                </button>
+            </div>
+
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="main-content">
+
+            <!-- TOPBAR -->
+            <header class="dashboard-topbar">
+                <div class="topbar-left">
+                    <button class="sidebar-toggle" id="sidebarToggle" type="button">☰</button>
+                    <div>
+                        <h2>Dashboard</h2>
+                        <p>Ringkasan informasi BukuKita</p>
+                    </div>
+                </div>
+
+                <div class="topbar-profile">
+                    <div class="notification-icon">♧</div>
+                    <div class="profile-avatar" id="profileAvatar">U</div>
+                    <div class="profile-information">
+                        <strong id="profileName">Pengguna</strong>
+                        <small id="profileRole">User</small>
+                    </div>
+                </div>
+            </header>
+
+            <!-- PAGE CONTENT -->
+            <section class="dashboard-content">
+
+                <!-- GREETING -->
+                <div class="welcome-section">
+                    <div>
+                        <p class="welcome-date" id="currentDate"></p>
+                        <h1 id="welcomeMessage">Selamat datang!</h1>
+                        <p>Senang melihat Anda kembali. Mari kelola koleksi buku hari ini.</p>
+                    </div>
+                    <div class="welcome-decoration">📚</div>
+                </div>
+
+                <!-- STATISTICS -->
+                <div class="section-heading">
+                    <div>
+                        <h2>Ringkasan Dashboard</h2>
+                        <p>Informasi singkat mengenai koleksi dan pesanan buku.</p>
+                    </div>
+                </div>
+
+                <div class="stats-grid">
+
+                    <div class="stat-card">
+                        <div class="stat-top">
+                            <div class="stat-icon purple">▤</div>
+                            <span class="stat-tag">Katalog</span>
+                        </div>
+                        <h3 id="totalKatalog">0</h3>
+                        <p>Total Jenis Buku</p>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-top">
+                            <div class="stat-icon blue">▣</div>
+                            <span class="stat-tag">Persediaan</span>
+                        </div>
+                        <h3 id="totalStok">0</h3>
+                        <p>Total Stok Buku</p>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-top">
+                            <div class="stat-icon orange">🛒</div>
+                            <span class="stat-tag">Pesanan</span>
+                        </div>
+                        <h3 id="totalPesanan">0</h3>
+                        <p>Data Tracking Pesanan</p>
+                    </div>
+
+                </div>
+
+                <!-- CONTENT GRID -->
+                <div class="dashboard-grid">
+
+                    <!-- RECENT TRACKING -->
+                    <div class="dashboard-panel tracking-panel">
+                        <div class="panel-heading">
+                            <div>
+                                <h2>Pesanan Terbaru</h2>
+                                <p>Informasi pengiriman buku</p>
+                            </div>
+                            <a href="tracking.html" class="text-link">Lihat semua →</a>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="dashboard-table">
+                                <thead>
+                                    <tr>
+                                        <th>Nomor DO</th>
+                                        <th>Pemesan</th>
+                                        <th>Ekspedisi</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="recentTracking">
+                                    <tr>
+                                        <td colspan="4">Memuat data pesanan...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- QUICK ACCESS -->
+                    <div class="dashboard-panel quick-panel">
+                        <div class="panel-heading">
+                            <div>
+                                <h2>Akses Cepat</h2>
+                                <p>Pintasan menu BukuKita</p>
+                            </div>
+                        </div>
+
+                        <a href="stok.html" class="quick-link">
+                            <div class="quick-icon purple">▤</div>
+                            <div>
+                                <strong>Katalog Buku</strong>
+                                <small>Lihat koleksi dan persediaan</small>
+                            </div>
+                            <span>→</span>
+                        </a>
+
+                        <a href="checkout.html" class="quick-link">
+                            <div class="quick-icon orange">🛒</div>
+                            <div>
+                                <strong>Checkout</strong>
+                                <small>Lakukan pemesanan buku</small>
+                            </div>
+                            <span>→</span>
+                        </a>
+
+                        <a href="tracking.html" class="quick-link">
+                            <div class="quick-icon blue">⌖</div>
+                            <div>
+                                <strong>Tracking Pesanan</strong>
+                                <small>Pantau status pengiriman</small>
+                            </div>
+                            <span>→</span>
+                        </a>
+                    </div>
+
+                </div>
+
+                <!-- FOOTER -->
+                <footer class="dashboard-footer">
+                    © 2026 BukuKita. All Rights Reserved.
+                </footer>
+
+            </section>
+        </main>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/script.js"></script>
+
+</body>
+</html>
